@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Jack Ma Sucks -->
+  <title>Jack Ma Slider</title>
+  <meta name="description" content="A slider to change the size of Jack Ma's face from 10% to 120%">
+  <meta name="keywords" content="Jack Ma,Jack Ma Face,Alibaba,Ant Group,做没有风险的创新就是扼杀创新">
+  <script src="howler.min.js"></script>
+  <style>
+    .background{ 
+      background-image: url('background.jpg');
+      width:593px;
+      height:763px;
+      margin: auto;
+      position: relative;
+    }
+    #face {
+      position: absolute;
+      top:210px;
+      left:145px;
+    }
+    .controls {
+      margin: 30px auto 20px auto;
+      text-align: center;
+    }
+    #size {
+      width:300px;
+    }
+    #percentage {
+      display: inline-block;
+      width:100px;
+    }
+    #sound {
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="controls">
+    <label for="sound">Sound</label>
+    <input type="checkbox" id="sound" name="sound">
+    <input type="range" id="size" name="size" min="10" max="120" value="100">
+    <label id="percentage">100%</label>
+  </div>
+  <div class="background">
+    <img id="face" src="face.png" />
+  </div>
+  <script>
+
+    var slider = document.getElementById("size");
+    var percentage = document.getElementById("percentage");
+    var face = document.getElementById("face");
+    var sound = document.getElementById("sound");
+
+    var clip;
+
+    slider.addEventListener("input", function () {
+      percentage.innerText = slider.value + "%";
+      face.style.transform = "scale(" + (slider.value / 100) + "," + (slider.value / 100) + ")";
+
+      if (!clip) {
+        clip = new Howl({
+        src: ['jackma.mp3'],
+        volume: 0.5
+        });
+      }
+
+      clip.stop();
+      if (sound.checked) {
+        clip.rate(1 / ((parseInt(slider.value) + 60) / 160));
+        clip.play();
+      }
+    });
+
+  </script>
+</body>
+
+</html>
